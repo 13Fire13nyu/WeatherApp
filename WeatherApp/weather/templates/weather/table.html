@@ -1,0 +1,100 @@
+{% extends 'weather/base.html' %}
+
+{% block style%}
+	table {width: 100%; border-collapse: collapse;}
+	table thead tr {color: #ffffff; font-weight: bold; background: #2e82c3;}
+	table thead tr td {border: 1px solid #01ab73;}
+	table tbody tr td {border: 1px solid #e8e9eb;}
+	table tbody tr:nth-child(2n) {background: #f4f4f4;}
+	table tbody tr:hover {background: #cbdfef;}
+{% endblock %}
+
+{% block content%}
+	<div class="row py-lg-5">
+		<div class="col-lg-10 col-md-8 mx-auto">
+			<h1 class="fw-light">Просмотр архивов погодных условий в городе Москве</h1>
+			<hr>
+			<p>Значения столбцов: T- температура воздуха, гр. Ц. ; Td - точка росы, гр. Ц. ; h - нижняя граница облачности, м ; VV - горизонтальная видимость, км</p>
+		</div>
+	</div>
+	<hr>
+
+	<form action="{% url 'table' %}" method="get">
+
+		<select name="Year_ch">
+			<option selected="selected" disabled>Год</option> 
+			{% for year in Year %}
+				<option value="{{year}}">{{year}}</option>
+			{% endfor %}
+			<input type="submit" value="Filter1"/>	
+		</select>
+
+	</form>
+	
+	<form action="{% url 'table' %}" method="get">
+
+		<select name="Month_ch">
+			<option selected="selected" disabled>Месяц</option> 
+			{% for month in Month %}
+				<option value="{{month}}">{{month}}</option>
+			{% endfor %}
+			<input type="submit" value="Filter2"/>	
+		</select>
+
+	</form>
+
+	<hr>
+	<!--
+	<select name="month" id="month">
+		<option value="mdef">Месяц</option> 
+		<option value="jan">Январь</option>
+		<option value="feb">Февраль</option>
+		<option value="mar">Март</option>
+		<option value="apr">Апрель</option>
+		<option value="may">Май</option>
+		<option value="jun">Июнь</option>
+		<option value="jul">Июль</option>
+		<option value="aug">Август</option>
+		<option value="sep">Сентябрь</option>
+		<option value="oct">Октябрь</option>
+		<option value="nov">Ноябрь</option>
+		<option value="dec">Декабрь</option>
+	</select>
+	<hr>-->
+	<table class="table">
+		<thead>
+			<tr>
+				<td>Дата</td>
+				<td>Время (московское)</td>
+				<td>T</td>
+				<td>Отн. влажность воздуха, %</td>
+				<td>Td</td>
+				<td>Атм. давление, мм рт. ст.</td>
+				<td>Направление ветра</td>
+				<td>Скорость ветра, м/с</td>
+				<td>Облачность, %</td>
+				<td>h</td>
+				<td>VV</td>
+				<td>Погодные явления</td>			
+			</tr>
+		</thead>
+		<tbody>
+			{% for d in data%}
+				<tr> 
+					<td> {{d.date}}</td>
+					<td>{{d.time}}</td>
+					<td>{{d.t}}</td>
+					<td>{{d.ran}}</td>
+					<td>{{d.atm_pres}}</td>
+					<td>{{d.time}}</td>
+					<td>{{d.wind_dir}}</td>
+					<td>{{d.wind_speed}}</td>
+					<td>{{d.cloudiness}}</td>
+					<td>{{d.h}}</td>
+					<td>{{d.vv}}</td>
+					<td>{{d.wconditions}}</td>
+				</tr> 
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

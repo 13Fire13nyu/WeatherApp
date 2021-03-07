@@ -1,0 +1,18 @@
+{% extends 'weather/base.html' %}
+
+{% block content%}
+	<div class="row py-lg-5">
+		<div class="col-lg-10 col-md-8 mx-auto">
+			<h1 class="fw-light">Загрузка архивов погодных условий в городе Москве</h1>
+			<hr>
+			<form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+				<button type="submit" class="btn btn-secondary">Загрузить архив</button>
+			</form>	
+			<hr>
+			<p><a href="{% url '' %}">Вернуться на главную</a></p>
+
+		</div>
+	</div>
+{% endblock content %}
