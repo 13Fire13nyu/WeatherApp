@@ -27,17 +27,19 @@ month_choice = ['Январь','Февраль',
 
 def index(request):
     return render(request, 'weather/index.html')
-    
+ 
+ 
 def table(request):
-    print('TABLE') # Чтобы показать, что этот процесс каждый раз перезапускается.
+    #print('TABLE') # Чтобы показать, что этот процесс каждый раз перезапускается.
     data = WeatherTable.objects.all().order_by('date_time')
-
+    global year, month
+    
     answer_year = request.GET.get('Year')
     answer_month = request.GET.get('Month')
     
                 
     if answer_year != None:
-    
+        
         if answer_month!=None:
         
             for i in range(12):
@@ -74,7 +76,6 @@ def table(request):
         'Month': month_choice,
         'strs': strs,
     }
-
 
     return render(request, 'weather/table.html', context)
     

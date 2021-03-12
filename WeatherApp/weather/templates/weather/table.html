@@ -11,6 +11,9 @@
 {% endblock %}
 
 {% block content%}
+
+	{% load weather_extras %}
+
 	<div class="row py-lg-5">
 		<div class="col-lg-10 col-md-8 mx-auto">
 			<h1 class="fw-light">Просмотр архивов погодных условий в городе Москве</h1>
@@ -78,33 +81,11 @@
 		</tbody>
 	</table>
 	
-	<!--{% if strs.has_other_pages %}
-		<ul class="pagination">
+	<div class="pagination">
+		<span class="step-links">
 			{% if strs.has_previous %}
-				<li><a href="?page={{ strs.previous_page_number }}">Предыдущая</a></li>
-			{% else %}
-				<li class="disabled"><span>Предыдущая</span></li>
-			{% endif %}
-			{% for i in strs.paginator.page_range %}
-				{% if strs.number == i %}
-					<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-				{% else %}
-					<li><a href="?page={{ i }}">{{ i }}</a></li>
-				{% endif %}
-			{% endfor %}
-			{% if strs.has_next %}
-				<li><a href="?page={{ strs.next_page_number }}">Следующая</a></li>
-			{% else %}
-				<li class="disabled"><span>Следующая</span></li>
-			{% endif %}
-
-		</ul>
-	{% endif %}-->
-	
-	<div class="">
-		<span class="">
-			{% if strs.has_previous %}
-				<a href="?page={{ strs.previous_page_number }}">Предыдущая</a>
+				<a href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; Первая</a>
+				<a href="{% my_url strs.previous_page_number 'page' request.GET.urlencode %}">Предыдущая</a>
 			{% endif %}
 
 			<span class="">
@@ -112,7 +93,8 @@
 			</span>
 
 			{% if strs.has_next %}
-				<a href="?page={{ strs.next_page_number }}">Следующая</a>
+				<a href="{% my_url strs.next_page_number 'page' request.GET.urlencode %}">Следующая</a>
+				<a href="{% my_url strs.paginator.num_pages 'page' request.GET.urlencode %}">Последняя &raquo;</a>
 			{% endif %}
 		</span>
 	</div>

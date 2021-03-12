@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather.apps.WeatherConfig',
     'import_export',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
