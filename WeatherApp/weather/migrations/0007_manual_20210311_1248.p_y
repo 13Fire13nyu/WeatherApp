@@ -1,0 +1,14 @@
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('weather', '0006_auto_20210309_2329'),
+    ]
+
+    operations = [
+        migrations.RunSQL(
+            sql = 'DROP TABLE weather_weathertable',
+        ),
+    ]

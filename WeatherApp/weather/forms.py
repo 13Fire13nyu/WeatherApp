@@ -1,5 +1,5 @@
 from django import forms
-from .models import UploadTable
+from .models import UploadTable, WeatherTable
 '''
 class TableForm(forms.ModelForm):
     class Meta:
