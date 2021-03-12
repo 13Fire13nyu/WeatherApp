@@ -7,11 +7,14 @@ from django.contrib import messages
 from tablib import Databook
 from django.db.models import DateTimeField, Q
 import datetime as DT
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 
 year_choice = []
 for i in range(2010,2014):
     year_choice.append(str(i))
+    
     
 month_choice = ['Январь','Февраль',
             'Март','Апрель',
@@ -26,36 +29,48 @@ def index(request):
     return render(request, 'weather/index.html')
     
 def table(request):
-    
+    print('TABLE')
     data = WeatherTable.objects.all().order_by('date_time')
-    answer_year = None
-    answer_month = None
 
     answer_year = request.GET.get('Year')
     answer_month = request.GET.get('Month')
+    page = request.GET.get('page',1)
                 
     if answer_year != None:
-
+    
         if answer_month!=None:
-            
+        
             for i in range(12):
                 if month_choice[i] == request.GET.get('Month'):
                     answer_month = i+1
                     break
-        #print('ANSWER_MONTH: ', answer_month)
             queryset = WeatherTable.objects.filter(
                                                     Q(date_time__year=answer_year),
                                                     Q(date_time__month=answer_month)
                                                     ).order_by('date_time')
+
         else:
             queryset = WeatherTable.objects.filter(date_time__year=answer_year).order_by('date_time')
+
     else:
         queryset = data
 
+    
+    paginator = Paginator(queryset, 15)
+    
+    try:
+        strs = paginator.page(page)
+    except PageNotAnInteger:
+        strs = paginator.page(1)
+    except EmptyPage:
+        strs = paginator.page(paginator.num_pages)
+    
+    
     context = {
-        'data': queryset,
+        #'data': queryset,
         'Year': year_choice,
         'Month': month_choice,
+        'strs': strs,
     }
 
 
