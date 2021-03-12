@@ -78,12 +78,12 @@
 		</tbody>
 	</table>
 	
-	{% if strs.has_other_pages %}
+	<!--{% if strs.has_other_pages %}
 		<ul class="pagination">
 			{% if strs.has_previous %}
-				<li><a href="?page={{ strs.previous_page_number }}">&laquo;</a></li>
+				<li><a href="?page={{ strs.previous_page_number }}">Предыдущая</a></li>
 			{% else %}
-				<li class="disabled"><span>&laquo;</span></li>
+				<li class="disabled"><span>Предыдущая</span></li>
 			{% endif %}
 			{% for i in strs.paginator.page_range %}
 				{% if strs.number == i %}
@@ -93,11 +93,27 @@
 				{% endif %}
 			{% endfor %}
 			{% if strs.has_next %}
-				<li><a href="?page={{ strs.next_page_number }}">&raquo;</a></li>
+				<li><a href="?page={{ strs.next_page_number }}">Следующая</a></li>
 			{% else %}
-				<li class="disabled"><span>&raquo;</span></li>
+				<li class="disabled"><span>Следующая</span></li>
 			{% endif %}
 
 		</ul>
-	{% endif %}
+	{% endif %}-->
+	
+	<div class="">
+		<span class="">
+			{% if strs.has_previous %}
+				<a href="?page={{ strs.previous_page_number }}">Предыдущая</a>
+			{% endif %}
+
+			<span class="">
+				Страница {{ strs.number }} из {{ strs.paginator.num_pages }}.
+			</span>
+
+			{% if strs.has_next %}
+				<a href="?page={{ strs.next_page_number }}">Следующая</a>
+			{% endif %}
+		</span>
+	</div>
 {% endblock %}

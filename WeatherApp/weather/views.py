@@ -29,12 +29,12 @@ def index(request):
     return render(request, 'weather/index.html')
     
 def table(request):
-    print('TABLE')
+    print('TABLE') # Чтобы показать, что этот процесс каждый раз перезапускается.
     data = WeatherTable.objects.all().order_by('date_time')
 
     answer_year = request.GET.get('Year')
     answer_month = request.GET.get('Month')
-    page = request.GET.get('page',1)
+    
                 
     if answer_year != None:
     
@@ -56,7 +56,9 @@ def table(request):
         queryset = data
 
     
-    paginator = Paginator(queryset, 15)
+    paginator = Paginator(queryset, 10)
+    page = request.GET.get('page',1)
+    
     
     try:
         strs = paginator.page(page)
